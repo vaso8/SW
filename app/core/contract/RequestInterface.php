@@ -7,10 +7,18 @@ interface RequestInterface
 
     /**
      * Return HTTP Method
-     * 
-     * @return string
+     *
+     * @param string
      */
     public function getMethod() : string;
+
+    /**
+     * Return Input Values
+     * 
+     * @param string $name
+     * @return mixed $result
+     */
+    public function input($name);
 
 }
 

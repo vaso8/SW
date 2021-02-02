@@ -10,10 +10,12 @@ class Url extends Services implements URLInterface
 {
     public $url;
 
+    public $routeURL;
+
     
-    public function __construct()
+    public function __construct($app)
     {
-        $this->setURL();
+        $this->app = $app;
     }
 
     /**
@@ -24,6 +26,16 @@ class Url extends Services implements URLInterface
     public function getURL() : string
     {
         return $this->url;
+    }
+
+    /**
+     * Get route URL
+     * 
+     * @return string $routeURL
+     */
+    public function getRouteURL() : string
+    {
+        return $this->routeURL ? $this->routeURL :'';
     }
 
 
@@ -47,6 +59,7 @@ class Url extends Services implements URLInterface
         if(in_array($url, $routes))
         {
             $result = true;
+            $this->routeURL = $url;
         } else {
             $routes = array_filter($routes, function($el) use ($urlArray) {
                 return count($urlArray) == count(explode('/', $el));
@@ -60,9 +73,10 @@ class Url extends Services implements URLInterface
                 for($j = 0; $j < count($route); $j++)
                 {
                     if($urlArray[$j] == $route[$j] || preg_match($pattern, $route[$j]))
-                    {
+                    {   
+                        $this->routeURL = $routes[$i];
                         $result = true;
-                    } else {
+                    } else { 
                         $result = false;
                         break;
                     }
@@ -70,16 +84,5 @@ class Url extends Services implements URLInterface
             }
         };
         return $result;
-    }
-
-    
-    /**
-     * Set URL
-     * 
-     * @return void
-     */
-    private function setURL() : void
-    {
-        $this->url = $_GET['url'] ? trim(filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL), '/') : '/';
     }
 }

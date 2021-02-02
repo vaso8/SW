@@ -13,12 +13,15 @@ class Request extends Services implements RequestInterface
      */
     private $method;
 
+    /**
+     * Post Array
+     */
+    public $input;
 
-    public function __construct()
+
+    public function __construct($app)
     {
-        /**
-         * Set HTTP request method
-         */
+        $this->app = $app;
         $this->setMethod();
     }
 
@@ -33,15 +36,21 @@ class Request extends Services implements RequestInterface
     }
 
     /**
+     * Get POST Values
+     */
+    public function input($name)
+    {
+        return isset($this->input[$name]) ? $this->input[$name] : false;
+    }
+
+    /**
      * Set request method
      * 
      * @return void
      */
     private function setMethod() : void
     {
-        /**
-         * Sets GET or POST request method to $reqMethod
-         */
         $this->method = strtolower($_SERVER['REQUEST_METHOD']);
     }
+
 }

@@ -11,9 +11,14 @@ use App\Core\Route;
  */
 
 
+Route::get('/goback',                          'ProductController@index');
 Route::get('/',                          'ProductController@index');
 Route::get('product/create',             'ProductController@create');
 Route::get('product/update',             'ProductController@update');
 Route::get('product/show/id',            'ProductController@show');
 Route::get('product/show/{id}',          'ProductController@show');
+Route::get('product/show/{name}/{lastname}',          'ProductController@show');
 Route::get('product/show',               'ProductController@show');
+Route::post('/create',                   'ProductController@postCreate');
+Route::get('/create',                   'ProductController@postCreate');
+Route::get('/create',                   'ProductController@postCreate');
